@@ -467,5 +467,193 @@ export const languages = {
       'suffix.more_would_be_undone': '(+ {count} weitere würden rückgängig gemacht)',
       'suffix.tip_to_undo': '💡 Um diese Rückgängigmachungen tatsächlich durchzuführen, führe aus: ccundo undo'
     }
+  },
+
+  zh: {
+    name: '简体中文',
+    messages: {
+      // Command descriptions
+      'cmd.list.description': '列出当前 Claude Code 会话中的所有操作',
+      'cmd.undo.description': '撤销当前 Claude Code 会话中的操作',
+      'cmd.redo.description': '重做之前撤销的操作',
+      'cmd.preview.description': '预览将要撤销的内容，但不进行更改',
+      'cmd.sessions.description': '列出所有可用的 Claude Code 会话',
+      'cmd.session.description': '切换到不同的会话',
+      'cmd.language.description': '设置界面语言',
+
+      // Options
+      'opt.all': '显示所有操作，包括已撤销的',
+      'opt.session': '指定会话 ID',
+      'opt.claude': '显示 Claude Code 会话的操作（默认）',
+      'opt.local': '显示本地 ccundo 跟踪的操作',
+      'opt.yes': '跳过确认',
+
+      // Messages
+      'msg.no_active_session': '在此目录中未找到活动的 Claude Code 会话。',
+      'msg.make_sure_directory': '请确保您在已使用 Claude Code 的目录中。',
+      'msg.no_local_session': '未找到本地 ccundo 会话。',
+      'msg.no_operations': '未找到操作。',
+      'msg.no_operations_to_undo': '没有可撤销的操作。',
+      'msg.no_operations_to_redo': '没有可重做的操作。',
+      'msg.operation_not_found': '未找到操作 {id}。',
+      'msg.already_undone': '此操作已被撤销。',
+      'msg.undo_cancelled': '撤销已取消。',
+      'msg.no_sessions_found': '未找到 Claude Code 会话。',
+      'msg.no_local_sessions': '未找到本地会话。',
+      'msg.language_set': '语言已设置为 {language}。',
+      'msg.language_invalid': '无效的语言。可用语言：{languages}',
+
+      // Prompts
+      'prompt.select_operation_undo': '选择要撤销的操作：',
+      'prompt.select_operation_redo': '选择要重做的操作：',
+      'prompt.select_operation_preview': '选择要预览的操作：',
+      'prompt.confirm_undo': '确定要撤销这 {count} 个操作吗？',
+      'prompt.confirm_redo': '确定要重做这 {count} 个操作吗？',
+      'prompt.cascading_warning': '⚠️ 级联撤销：选择一个操作将撤销该操作及其之后的所有操作。',
+
+      // Operation types
+      'op.file_create': '创建文件',
+      'op.file_edit': '编辑文件',
+      'op.file_delete': '删除文件',
+      'op.file_rename': '重命名文件',
+      'op.directory_create': '创建目录',
+      'op.directory_delete': '删除目录',
+      'op.bash_command': 'bash 命令',
+
+      // Operation actions
+      'action.will_delete_file': '将删除文件：',
+      'action.will_revert_file': '将还原文件：',
+      'action.will_restore_file': '将恢复文件：',
+      'action.will_rename_back': '将重命名回：',
+      'action.will_remove_directory': '将删除目录：',
+      'action.will_restore_directory': '将恢复目录：',
+      'action.cannot_undo_bash': '无法自动撤销 bash 命令：',
+      'action.manual_intervention': '需要手动干预',
+
+      // Headers
+      'header.operations_claude': 'Claude Code 会话的操作：',
+      'header.operations_local': '本地会话 {sessionId} 的操作：',
+      'header.available_sessions_claude': '可用的 Claude Code 会话：',
+      'header.available_sessions_local': '可用的本地会话：',
+      'header.preview': '📋 预览：将撤销 {count} 个操作：',
+      'header.undoing': '正在撤销 {count} 个操作...',
+      'header.redoing': '正在重做 {count} 个操作...',
+      'header.this_will_undo': '这将撤销 {count} 个操作：',
+      'header.this_will_redo': '这将重做 {count} 个操作：',
+
+      // Status
+      'status.active': '[活动]',
+      'status.undone': '[已撤销]',
+      'status.current_content': '当前内容：',
+      'status.content_to_restore': '要恢复的内容：',
+      'status.original_not_available': '（会话中原始内容不可用）',
+      'status.content_not_available': '（会话中内容不可用）',
+      'status.completed': '完成：{success} 个成功，{failed} 个失败',
+
+      // Time
+      'time.seconds_ago': '{seconds} 秒前',
+      'time.minutes_ago': '{minutes} 分钟前',
+      'time.hours_ago': '{hours} 小时前',
+      'time.days_ago': '{days} 天前',
+
+      // Suffixes
+      'suffix.more_operations': '（+ 还将撤销 {count} 个操作）',
+      'suffix.more_would_be_undone': '（+ 还将撤销 {count} 个操作）',
+      'suffix.tip_to_undo': '💡 要实际执行这些撤销，请运行：ccundo undo'
+    }
+  },
+
+  tw: {
+    name: '繁體中文',
+    messages: {
+      // Command descriptions
+      'cmd.list.description': '列出目前 Claude Code 會話中的所有操作',
+      'cmd.undo.description': '撤銷目前 Claude Code 會話中的操作',
+      'cmd.redo.description': '重做之前撤銷的操作',
+      'cmd.preview.description': '預覽將要撤銷的內容，但不進行更改',
+      'cmd.sessions.description': '列出所有可用的 Claude Code 會話',
+      'cmd.session.description': '切換到不同的會話',
+      'cmd.language.description': '設定介面語言',
+
+      // Options
+      'opt.all': '顯示所有操作，包括已撤銷的',
+      'opt.session': '指定會話 ID',
+      'opt.claude': '顯示 Claude Code 會話的操作（預設）',
+      'opt.local': '顯示本地 ccundo 跟踪的操作',
+      'opt.yes': '跳過確認',
+
+      // Messages
+      'msg.no_active_session': '在此目錄中未找到活動的 Claude Code 會話。',
+      'msg.make_sure_directory': '請確保您在使用過 Claude Code 的目錄中。',
+      'msg.no_local_session': '未找到本地 ccundo 會話。',
+      'msg.no_operations': '未找到操作。',
+      'msg.no_operations_to_undo': '沒有可撤銷的操作。',
+      'msg.no_operations_to_redo': '沒有可重做的操作。',
+      'msg.operation_not_found': '未找到操作 {id}。',
+      'msg.already_undone': '此操作已被撤銷。',
+      'msg.undo_cancelled': '撤銷已取消。',
+      'msg.no_sessions_found': '未找到 Claude Code 會話。',
+      'msg.no_local_sessions': '未找到本地會話。',
+      'msg.language_set': '語言已設定為 {language}。',
+      'msg.language_invalid': '無效的語言。可用語言：{languages}',
+
+      // Prompts
+      'prompt.select_operation_undo': '選擇要撤銷的操作：',
+      'prompt.select_operation_redo': '選擇要重做的操作：',
+      'prompt.select_operation_preview': '選擇要預覽的操作：',
+      'prompt.confirm_undo': '確定要撤銷這 {count} 個操作嗎？',
+      'prompt.confirm_redo': '確定要重做這 {count} 個操作嗎？',
+      'prompt.cascading_warning': '⚠️ 級聯撤銷：選擇一個操作將撤銷該操作及其之後的所有操作。',
+
+      // Operation types
+      'op.file_create': '創建文件',
+      'op.file_edit': '編輯文件',
+      'op.file_delete': '刪除文件',
+      'op.file_rename': '重命名文件',
+      'op.directory_create': '創建目錄',
+      'op.directory_delete': '刪除目錄',
+      'op.bash_command': 'bash 命令',
+
+      // Operation actions
+      'action.will_delete_file': '將刪除文件：',
+      'action.will_revert_file': '將還原文件：',
+      'action.will_restore_file': '將恢復文件：',
+      'action.will_rename_back': '將重命名回：',
+      'action.will_remove_directory': '將刪除目錄：',
+      'action.will_restore_directory': '將恢復目錄：',
+      'action.cannot_undo_bash': '無法自動撤銷 bash 命令：',
+      'action.manual_intervention': '需要手動干預',
+
+      // Headers
+      'header.operations_claude': 'Claude Code 會話的操作：',
+      'header.operations_local': '本地會話 {sessionId} 的操作：',
+      'header.available_sessions_claude': '可用的 Claude Code 會話：',
+      'header.available_sessions_local': '可用的本地會話：',
+      'header.preview': '📋 預覽：將撤銷 {count} 個操作：',
+      'header.undoing': '正在撤銷 {count} 個操作...',
+      'header.redoing': '正在重做 {count} 個操作...',
+      'header.this_will_undo': '這將撤銷 {count} 個操作：',
+      'header.this_will_redo': '這將重做 {count} 個操作：',
+
+      // Status
+      'status.active': '[活動]',
+      'status.undone': '[已撤銷]',
+      'status.current_content': '當前內容：',
+      'status.content_to_restore': '要恢復的內容：',
+      'status.original_not_available': '（會話中原始內容不可用）',
+      'status.content_not_available': '（會話中內容不可用）',
+      'status.completed': '完成：{success} 個成功，{failed} 個失敗',
+
+      // Time
+      'time.seconds_ago': '{seconds} 秒前',
+      'time.minutes_ago': '{minutes} 分鐘前',
+      'time.hours_ago': '{hours} 小時前',
+      'time.days_ago': '{days} 天前',
+
+      // Suffixes
+      'suffix.more_operations': '（+ 還將撤銷 {count} 個操作）',
+      'suffix.more_would_be_undone': '（+ 還將撤銷 {count} 個操作）',
+      'suffix.tip_to_undo': '💡 要實際執行這些撤銷，請運行：ccundo undo'
+    }
   }
 };
