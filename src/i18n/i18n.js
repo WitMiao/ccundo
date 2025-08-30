@@ -29,13 +29,13 @@ class I18n {
       const config = { language: this.currentLanguage };
       await fs.writeFile(this.configFile, JSON.stringify(config, null, 2));
     } catch (error) {
-      console.error('Failed to save language config:', error.message);
+      console.error(this.t('error.save_config_failed'), error.message);
     }
   }
 
   async setLanguage(lang) {
     if (!languages[lang]) {
-      throw new Error(`Unsupported language: ${lang}`);
+      throw new Error(this.t('error.unsupported_language', { language: lang }));
     }
     this.currentLanguage = lang;
     await this.saveConfig();
@@ -63,7 +63,7 @@ class I18n {
   getCurrentLanguage() {
     return {
       code: this.currentLanguage,
-      name: languages[this.currentLanguage]?.name || 'Unknown'
+      name: languages[this.currentLanguage]?.name || this.t('ui.unknown_language')
     };
   }
 }

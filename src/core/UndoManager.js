@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 import { OperationType } from './Operation.js';
+import { i18n } from '../i18n/i18n.js';
 
 export class UndoManager {
   constructor() {
@@ -29,7 +30,7 @@ export class UndoManager {
       case OperationType.BASH_COMMAND:
         return await this.undoBashCommand(operation);
       default:
-        throw new Error(`Unknown operation type: ${operation.type}`);
+        throw new Error(i18n.t('error.unknown_operation_type', { type: operation.type }));
     }
   }
 
@@ -44,13 +45,13 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `File deleted: ${filePath}`,
+        message: i18n.t('undo.file_deleted', { path: filePath }),
         backupPath
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to undo file creation: ${error.message}`
+        message: i18n.t('undo.failed_file_creation', { error: error.message })
       };
     }
   }
@@ -91,14 +92,14 @@ export class UndoManager {
           } else {
             return {
               success: false,
-              message: `Cannot undo edit: expected string not found in ${filePath}`
+              message: i18n.t('undo.cannot_undo_edit', { path: filePath })
             };
           }
         }
       } else {
         return {
           success: false,
-          message: `Cannot undo file edit: insufficient data for ${filePath}`
+          message: i18n.t('undo.cannot_undo_edit_insufficient', { path: filePath })
         };
       }
       
@@ -106,13 +107,13 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `File edit reverted: ${filePath}`,
+        message: i18n.t('undo.file_edit_reverted', { path: filePath }),
         backupPath
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to undo file edit: ${error.message}`
+        message: i18n.t('undo.failed_file_edit', { error: error.message })
       };
     }
   }
@@ -123,7 +124,7 @@ export class UndoManager {
     if (!content) {
       return {
         success: false,
-        message: `Cannot restore file: content not available for ${filePath}`
+        message: i18n.t('undo.cannot_restore_file', { path: filePath })
       };
     }
     
@@ -132,12 +133,12 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `File restored: ${filePath}`
+        message: i18n.t('undo.file_restored', { path: filePath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to restore file: ${error.message}`
+        message: i18n.t('undo.failed_file_restore', { error: error.message })
       };
     }
   }
@@ -150,12 +151,12 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `File renamed back: ${newPath} → ${oldPath}`
+        message: i18n.t('undo.file_renamed_back', { oldPath: newPath, newPath: oldPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to undo rename: ${error.message}`
+        message: i18n.t('undo.failed_rename', { error: error.message })
       };
     }
   }
@@ -168,12 +169,12 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `Directory removed: ${dirPath}`
+        message: i18n.t('undo.directory_removed', { path: dirPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to remove directory: ${error.message}`
+        message: i18n.t('undo.failed_remove_directory', { error: error.message })
       };
     }
   }
@@ -186,12 +187,12 @@ export class UndoManager {
       
       return {
         success: true,
-        message: `Directory restored: ${dirPath}`
+        message: i18n.t('undo.directory_restored', { path: dirPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to restore directory: ${error.message}`
+        message: i18n.t('undo.failed_restore_directory', { error: error.message })
       };
     }
   }
@@ -201,7 +202,7 @@ export class UndoManager {
     
     return {
       success: false,
-      message: `Cannot auto-undo bash command: ${command}\nPlease manually revert any changes.`
+      message: i18n.t('undo.cannot_undo_bash', { command: command })
     };
   }
 }

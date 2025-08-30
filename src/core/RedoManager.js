@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 import { OperationType } from './Operation.js';
+import { i18n } from '../i18n/i18n.js';
 
 export class RedoManager {
   constructor() {
@@ -29,7 +30,7 @@ export class RedoManager {
       case OperationType.BASH_COMMAND:
         return await this.redoBashCommand(operation);
       default:
-        throw new Error(`Unknown operation type: ${operation.type}`);
+        throw new Error(i18n.t('error.unknown_operation_type', { type: operation.type }));
     }
   }
 
@@ -42,7 +43,7 @@ export class RedoManager {
       if (exists) {
         return {
           success: false,
-          message: `Cannot redo file creation: ${filePath} already exists`
+          message: i18n.t('redo.cannot_redo_file_exists', { path: filePath })
         };
       }
 
@@ -57,7 +58,7 @@ export class RedoManager {
         if (!content) {
           return {
             success: false,
-            message: `Cannot redo file creation: no content available for ${filePath}`
+            message: i18n.t('redo.cannot_redo_no_content', { path: filePath })
           };
         }
       }
@@ -66,12 +67,12 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `File recreated: ${filePath}`
+        message: i18n.t('redo.file_recreated', { path: filePath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo file creation: ${error.message}`
+        message: i18n.t('redo.failed_file_creation', { error: error.message })
       };
     }
   }
@@ -91,7 +92,7 @@ export class RedoManager {
         // because we don't know what the "new" content should be
         return {
           success: false,
-          message: `Cannot redo legacy file edit: insufficient data for ${filePath}`
+          message: i18n.t('redo.cannot_redo_legacy_edit', { path: filePath })
         };
       } else if (isMultiEdit && edits) {
         // Redo MultiEdit by applying each edit in original order
@@ -114,14 +115,14 @@ export class RedoManager {
           } else {
             return {
               success: false,
-              message: `Cannot redo edit: original string not found in ${filePath}`
+              message: i18n.t('redo.cannot_redo_edit', { path: filePath })
             };
           }
         }
       } else {
         return {
           success: false,
-          message: `Cannot redo file edit: insufficient data for ${filePath}`
+          message: i18n.t('redo.cannot_redo_edit_insufficient', { path: filePath })
         };
       }
       
@@ -129,13 +130,13 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `File edit redone: ${filePath}`,
+        message: i18n.t('redo.file_edit_redone', { path: filePath }),
         backupPath
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo file edit: ${error.message}`
+        message: i18n.t('redo.failed_file_edit', { error: error.message })
       };
     }
   }
@@ -148,7 +149,7 @@ export class RedoManager {
       if (!exists) {
         return {
           success: false,
-          message: `Cannot redo file deletion: ${filePath} does not exist`
+          message: i18n.t('redo.cannot_redo_file_not_exist', { path: filePath })
         };
       }
 
@@ -161,13 +162,13 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `File deleted again: ${filePath}`,
+        message: i18n.t('redo.file_deleted_again', { path: filePath }),
         backupPath
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo file deletion: ${error.message}`
+        message: i18n.t('redo.failed_file_deletion', { error: error.message })
       };
     }
   }
@@ -182,14 +183,14 @@ export class RedoManager {
       if (!oldExists) {
         return {
           success: false,
-          message: `Cannot redo rename: ${oldPath} does not exist`
+          message: i18n.t('redo.cannot_redo_rename_not_exist', { path: oldPath })
         };
       }
       
       if (newExists) {
         return {
           success: false,
-          message: `Cannot redo rename: ${newPath} already exists`
+          message: i18n.t('redo.cannot_redo_rename_exists', { path: newPath })
         };
       }
 
@@ -197,12 +198,12 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `File renamed again: ${oldPath} → ${newPath}`
+        message: i18n.t('redo.file_renamed_again', { oldPath: oldPath, newPath: newPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo rename: ${error.message}`
+        message: i18n.t('redo.failed_rename', { error: error.message })
       };
     }
   }
@@ -215,7 +216,7 @@ export class RedoManager {
       if (exists) {
         return {
           success: false,
-          message: `Cannot redo directory creation: ${dirPath} already exists`
+          message: i18n.t('redo.cannot_redo_dir_exists', { path: dirPath })
         };
       }
 
@@ -223,12 +224,12 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `Directory created again: ${dirPath}`
+        message: i18n.t('redo.directory_created_again', { path: dirPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo directory creation: ${error.message}`
+        message: i18n.t('redo.failed_directory_creation', { error: error.message })
       };
     }
   }
@@ -241,7 +242,7 @@ export class RedoManager {
       if (!exists) {
         return {
           success: false,
-          message: `Cannot redo directory deletion: ${dirPath} does not exist`
+          message: i18n.t('redo.cannot_redo_dir_not_exist', { path: dirPath })
         };
       }
 
@@ -249,12 +250,12 @@ export class RedoManager {
       
       return {
         success: true,
-        message: `Directory deleted again: ${dirPath}`
+        message: i18n.t('redo.directory_deleted_again', { path: dirPath })
       };
     } catch (error) {
       return {
         success: false,
-        message: `Failed to redo directory deletion: ${error.message}`
+        message: i18n.t('redo.failed_directory_deletion', { error: error.message })
       };
     }
   }
@@ -264,7 +265,7 @@ export class RedoManager {
     
     return {
       success: false,
-      message: `Cannot redo bash command: ${command}\nPlease manually re-run the command.`
+      message: i18n.t('redo.cannot_redo_bash', { command: command })
     };
   }
 }

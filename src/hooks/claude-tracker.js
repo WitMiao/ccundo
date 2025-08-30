@@ -3,9 +3,13 @@
 import fs from 'fs/promises';
 import { SessionTracker } from '../core/SessionTracker.js';
 import { Operation, OperationType } from '../core/Operation.js';
+import { i18n } from '../i18n/i18n.js';
 
 async function trackOperation() {
   try {
+    // Initialize i18n
+    await i18n.init();
+    
     const input = JSON.parse(process.argv[2] || '{}');
     
     let sessionId = await SessionTracker.getCurrentSession();
@@ -85,7 +89,7 @@ async function trackOperation() {
       await tracker.addOperation(operation);
     }
   } catch (error) {
-    console.error('Failed to track operation:', error.message);
+    console.error(i18n.t('error.track_operation_failed'), error.message);
   }
 }
 

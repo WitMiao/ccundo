@@ -21,7 +21,7 @@ export class OperationPreview {
       case OperationType.BASH_COMMAND:
         return await this.previewBashCommand(operation);
       default:
-        return { preview: `Unknown operation: ${operation.type}`, hasContent: false };
+        return { preview: i18n.t('error.unknown_operation', { type: operation.type }), hasContent: false };
     }
   }
 
@@ -32,7 +32,7 @@ export class OperationPreview {
       const exists = await fs.access(filePath).then(() => true).catch(() => false);
       if (!exists) {
         return {
-          preview: `${chalk.red('File does not exist:')} ${filePath}`,
+          preview: `${chalk.red(i18n.t('error.file_not_exist'))} ${filePath}`,
           hasContent: false
         };
       }
@@ -49,7 +49,7 @@ export class OperationPreview {
       };
     } catch (error) {
       return {
-        preview: `${chalk.red('Error reading file:')} ${filePath} - ${error.message}`,
+        preview: `${chalk.red(i18n.t('error.reading_file'))} ${filePath} - ${error.message}`,
         hasContent: false
       };
     }
@@ -87,11 +87,11 @@ export class OperationPreview {
         }
         
         if (maxLines > 10) {
-          preview += chalk.gray(`... (${maxLines - 10} more lines)`);
+          preview += chalk.gray(i18n.t('ui.more_lines', { count: maxLines - 10 }));
         }
       } else if (isMultiEdit && edits) {
         // Show what MultiEdit changes will be reversed
-        preview += chalk.gray('String replacements to be reversed:\n');
+        preview += chalk.gray(i18n.t('preview.string_replacements_reversed') + '\n');
         edits.forEach((edit, index) => {
           if (edit.new_string && edit.old_string !== undefined) {
             preview += `${index + 1}. "${chalk.red(edit.new_string)}" → "${chalk.green(edit.old_string)}"\n`;
@@ -99,10 +99,10 @@ export class OperationPreview {
         });
       } else if (oldString !== undefined && newString) {
         // Show what single edit will be reversed
-        preview += chalk.gray('String replacement to be reversed:\n');
+        preview += chalk.gray(i18n.t('preview.string_replacement_reversed') + '\n');
         preview += `"${chalk.red(newString)}" → "${chalk.green(oldString)}"`;
         if (replaceAll) {
-          preview += chalk.gray(' (all occurrences)');
+          preview += chalk.gray(i18n.t('preview.all_occurrences'));
         }
         preview += '\n\n';
         
@@ -117,7 +117,7 @@ export class OperationPreview {
         }
         
         if (foundLine >= 0) {
-          preview += chalk.gray('Context:\n');
+          preview += chalk.gray(i18n.t('preview.context') + '\n');
           const start = Math.max(0, foundLine - 2);
           const end = Math.min(lines.length, foundLine + 3);
           for (let i = start; i < end; i++) {
@@ -140,7 +140,7 @@ export class OperationPreview {
       };
     } catch (error) {
       return {
-        preview: `${chalk.yellow(i18n.t('action.will_revert_file'))} ${filePath}\n${chalk.red('Error:')} ${error.message}`,
+        preview: `${chalk.yellow(i18n.t('action.will_revert_file'))} ${filePath}\n${chalk.red(i18n.t('label.error'))} ${error.message}`,
         hasContent: false
       };
     }
@@ -182,7 +182,7 @@ export class OperationPreview {
     
     try {
       const exists = await fs.access(dirPath).then(() => true).catch(() => false);
-      const status = exists ? chalk.red('Will remove directory:') : chalk.gray('Directory already removed:');
+      const status = exists ? chalk.red(i18n.t('action.will_remove_directory')) : chalk.gray(i18n.t('status.directory_already_removed'));
       
       return {
         preview: `${status} ${dirPath}`,
@@ -191,7 +191,7 @@ export class OperationPreview {
       };
     } catch (error) {
       return {
-        preview: `${chalk.yellow('Will remove directory:')} ${dirPath}`,
+        preview: `${chalk.yellow(i18n.t('action.will_remove_directory'))} ${dirPath}`,
         hasContent: false,
         action: 'remove'
       };
@@ -202,7 +202,7 @@ export class OperationPreview {
     const { dirPath } = operation.data;
     
     return {
-      preview: `${chalk.green('Will restore directory:')} ${dirPath}`,
+      preview: `${chalk.green(i18n.t('action.will_restore_directory'))} ${dirPath}`,
       hasContent: false,
       action: 'restore'
     };
